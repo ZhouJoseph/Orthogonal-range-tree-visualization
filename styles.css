@@ -1,0 +1,66 @@
+html,
+body,
+#svgWrapper,
+svg {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  touch-action: pinch-zoom;
+}
+
+g.circles circle:hover {
+  cursor: move;
+}
+
+.resizing {
+  fill: blue;
+}
+
+.moving {
+  fill: green;
+}
+
+#controls {
+  position: absolute;
+  margin-top: 5px;
+}
+
+#controls input {
+  width: 3em;
+}
+
+#workdiv {
+  width: 100%;
+}
+
+#planediv {
+  width: 30%;
+  float: left;
+}
+
+line {
+  stroke: lightgreen;
+  stroke-width: 3;
+}
+
+#plane {
+  width: 100%;
+  float: left;
+  height: 700px;
+  background-color: #fdfdfd;
+  border-style: solid;
+  border-color: #2f2f2f;
+  border-width: 1px;
+}
+
+#treediv {
+  width: 70%;
+  float: left;
+}
+
+#tree {
+  width: 100%;
+  float: left;
+  height: 700px;
+  background-color: #2f2f2f;
+}
