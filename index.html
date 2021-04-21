@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Orthogonal Rnage Tree Demo</title>
+    <title>Orthogonal Range Tree Demo</title>
     <!-- d3.js for data visualization purposes -->
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <!-- bootstrap CSS-->
@@ -903,7 +903,7 @@
         treeData.push([n, "#fdfdfd"]);
         drawTreeNode();
         if (!n.isleaf) {
-          await drawAssocTree(n.assoc, n.x + 45, n.y, maxlevel - level);
+          await drawAssocTree(n.assoc, n.x + 60, n.y, maxlevel - level);
         }
         await timer(1);
       }
