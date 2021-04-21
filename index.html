@@ -54,19 +54,18 @@
           <p class="is-size-4"><b>Terminologies</b></p>
           <p class="is-size-6">
             <b>S:</b> Split nodes <b>WR:</b> Within Range <b>RS:</b> Report
-            entire Subtree as found points <b>Purple nodes:</b> Where we need to
-            do a search in the assoc structure
+            entire Subtree as found points <b>lightblue nodes:</b> Where we need
+            to do a search in the assoc structure
           </p>
         </div>
       </div>
     </section>
-    <div id="workdiv">
+    <center>
       <div id="planediv">
-        <center>
-          <div class="container">
-            <p class="is-size-4">Plane canvas</p>
-          </div>
-        </center>
+        <div class="container">
+          <p class="is-size-4">Plane canvas</p>
+        </div>
+
         <div id="svgWrapper">
           <svg id="plane"></svg>
           <fieldset id="controls">
@@ -100,14 +99,14 @@
           Randomized 8 Points and Query Range
         </button>
       </div>
-      <div id="treediv">
-        <center>
-          <div class="container">
-            <p class="is-size-4">Tree Canvas</p>
-          </div>
-        </center>
-        <svg id="tree"></svg>
-      </div>
+    </center>
+    <div id="treediv">
+      <center>
+        <div class="container">
+          <p class="is-size-4">Tree Canvas</p>
+        </div>
+      </center>
+      <svg id="tree"></svg>
     </div>
     <!-- bootstrap js -->
     <script
@@ -367,7 +366,7 @@
       }
       while (p !== null) {
         var id = "." + p.id + "node";
-        $(id).css("fill", "lightblue");
+        $(id).css("fill", "pink");
 
         if (p.isleaf) {
           // leaf node, so just report it to solve an important bug
@@ -378,7 +377,7 @@
                 .attr("dx", p.x - 5)
                 .attr("dy", p.y - 10)
                 .text("S")
-                .style("fill", "lightblue");
+                .style("fill", "pink");
               await timer(1000);
               return p;
             } else {
@@ -391,7 +390,7 @@
                 .attr("dx", p.x - 5)
                 .attr("dy", p.y - 10)
                 .text("S")
-                .style("fill", "lightblue");
+                .style("fill", "pink");
               await timer(1000);
               return p;
             } else {
@@ -407,7 +406,7 @@
               .attr("dx", p.x - 5)
               .attr("dy", p.y - 10)
               .text("S")
-              .style("fill", "lightblue");
+              .style("fill", "pink");
             await timer(1000);
             return p;
           } else {
@@ -486,7 +485,7 @@
       var yt = range.ytop;
       // console.log("oneDRangeSearch");
       var id = "." + node.id + "node";
-      $(id).css("fill", "purple");
+      $(id).css("fill", "lightblue");
       await timer(1000);
       if (node.isleaf) {
         if (await withinRange(node.val, range, node)) {
@@ -511,7 +510,7 @@
         var resultingData = [];
         while (!vl.isleaf) {
           var id = "." + vl.id + "node";
-          $(id).css("fill", "lightblue");
+          $(id).css("fill", "pink");
           await timer(1000);
           if (yb <= vl.val) {
             resultingData = resultingData.concat(
@@ -523,7 +522,7 @@
           }
         }
         var id = "." + vl.id + "node";
-        $(id).css("fill", "lightblue");
+        $(id).css("fill", "pink");
         await timer(1000);
         if (await withinRange(vl.val, range, vl)) {
           resultingData.push(vl.val);
@@ -531,7 +530,7 @@
         var vr = vsplit.right;
         while (!vr.isleaf) {
           var id = "." + vr.id + "node";
-          $(id).css("fill", "purple");
+          $(id).css("fill", "lightblue");
           await timer(1000);
           if (yt >= vr.val) {
             resultingData = resultingData.concat(
@@ -543,7 +542,7 @@
           }
         }
         var id = "." + vr.id + "node";
-        $(id).css("fill", "lightblue");
+        $(id).css("fill", "pink");
         await timer(1000);
         if (await withinRange(vr.val, range, vr)) {
           resultingData.push(vr.val);
@@ -574,7 +573,7 @@
         var resultingData = [];
         while (!vl.isleaf) {
           var id = "." + vl.id + "node";
-          $(id).css("fill", "lightblue");
+          $(id).css("fill", "pink");
           await timer(1000);
           if (xl <= vl.val) {
             // console.log("xl <= vl.val, searching vl.right.assoc");
@@ -587,7 +586,7 @@
           }
         }
         var id = "." + vl.id + "node";
-        $(id).css("fill", "lightblue");
+        $(id).css("fill", "pink");
         await timer(1000);
         if (await withinRange(vl.val, range, vl)) {
           resultingData.push(vl.val);
@@ -595,7 +594,7 @@
         var vr = vsplit.right;
         while (!vr.isleaf) {
           var id = "." + vr.id + "node";
-          $(id).css("fill", "lightblue");
+          $(id).css("fill", "pink");
           await timer(1000);
           if (xr >= vr.val) {
             // console.log("xr > vl.val, searching vr.left.assoc");
@@ -608,7 +607,7 @@
           }
         }
         var id = "." + vr.id + "node";
-        $(id).css("fill", "lightblue");
+        $(id).css("fill", "pink");
         await timer(1000);
         if (await withinRange(vr.val, range, vr)) {
           resultingData.push(vr.val);
@@ -840,10 +839,10 @@
       }
       var p = node;
       var stack = [];
-      var initX = $("#tree").width() / 2;
-      var initY = 300;
+      var initX = $("#tree").width() / 2 - 10;
+      var initY = 250;
       var levelRange = 250;
-      var nodeRange = 60;
+      var nodeRange = 52;
       var maxlevel = 0;
 
       // find maxLevel
@@ -904,7 +903,7 @@
         treeData.push([n, "#fdfdfd"]);
         drawTreeNode();
         if (!n.isleaf) {
-          await drawAssocTree(n.assoc, n.x + 50, n.y, maxlevel - level);
+          await drawAssocTree(n.assoc, n.x + 45, n.y, maxlevel - level);
         }
         await timer(1);
       }

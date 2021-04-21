@@ -24,7 +24,6 @@ g.circles circle:hover {
 }
 
 #controls {
-  position: absolute;
   margin-top: 5px;
 }
 
@@ -32,13 +31,8 @@ g.circles circle:hover {
   width: 3em;
 }
 
-#workdiv {
-  width: 100%;
-}
-
 #planediv {
-  width: 30%;
-  float: left;
+  width: 50%;
 }
 
 line {
@@ -48,8 +42,7 @@ line {
 
 #plane {
   width: 100%;
-  float: left;
-  height: 1000px;
+  height: 500px;
   background-color: #fdfdfd;
   border-style: solid;
   border-color: #2f2f2f;
@@ -57,13 +50,13 @@ line {
 }
 
 #treediv {
-  width: 70%;
+  width: 100%;
   float: left;
 }
 
 #tree {
   width: 100%;
   float: left;
-  height: 1000px;
+  height: 900px;
   background-color: #2f2f2f;
 }
