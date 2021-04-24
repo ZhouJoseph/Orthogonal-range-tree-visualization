@@ -11,8 +11,13 @@ g.circles circle:hover {
   cursor: move;
 }
 
-.resizing {
-  fill: blue;
+#textInput {
+  border: none;
+  display: inline;
+  font-family: inherit;
+  font-size: inherit;
+  padding: none;
+  width: 100px;
 }
 
 .hovercursor {
@@ -57,6 +62,6 @@ line {
 #tree {
   width: 100%;
   float: left;
-  height: 950px;
+  height: 1100px;
   background-color: #2f2f2f;
 }
