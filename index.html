@@ -92,11 +92,18 @@
           Find Points in Range
         </button>
         <button
-          id="findPoints"
+          id="randomizedPoint"
           class="button is-info is-light"
           onclick="randomized()"
         >
-          Randomized 8 Points and Query Range
+          Randomized 8 Points
+        </button>
+        <button
+          id="randomizedQuery"
+          class="button is-info is-light"
+          onclick="randomizedQuery()"
+        >
+          Randomized Query
         </button>
       </div>
     </center>
@@ -170,10 +177,17 @@
     );
     updateUserInputRange();
 
+    // globals for explaination
+    var numMessage = 0;
+    var startingMessageX = 10;
+    var startingMessageY = 20;
+    var messageRange = 20;
+
     // points are stored in dps -> data points;
     var dps = [];
     // to refresh the color of the points (to notify that point is in range, it's highlighted)
     function refreshSvg() {
+      updateUserInputRange();
       var temp = [];
       planeSVG.selectAll("g").data(temp).exit().remove();
       addPointToPlane(0, 0, false);
@@ -182,6 +196,7 @@
     function refreshTree() {
       treeData = [];
       treeBranch = [];
+      numMessage = 0;
       treeSVG.selectAll("text").data([]).exit().remove();
       treeSVG.selectAll("g").data(treeData).exit().remove();
       treeSVG.selectAll("line").data(treeBranch).exit().remove();
@@ -190,65 +205,66 @@
     function addPointToPlane(x, y, push = true) {
       if (push) {
         console.log("clicked:", x, y);
-
         if (dps.length != 0) {
           document.getElementById("buildTree").disabled = false;
         }
-        // var leafkey = x + ";" + y;
-        // var id = 0;
-        // if (leafkey in leafNodeID) {
-        //   id = leafNodeID[leafkey];
-        // } else {
-        //   id = treeNodeID++;
-        //   leafNodeID[leafkey] = id;
-        // }
-        // dps.push([x, y, "#2f2f2f", id + "node"]);
-        dps.push([x, y, "#2f2f2f", -1 + "node"]);
+        var leafkey = x + ";" + y;
+        var id = 0;
+        if (leafkey in leafNodeID) {
+          id = leafNodeID[leafkey];
+        } else {
+          id = leafIDCounter--;
+          leafNodeID[leafkey] = id;
+        }
+        dps.push([x, y, "#2f2f2f", id + "leaf"]);
       }
 
       var dots = planeSVG.selectAll("g").data(dps).enter().append("g");
 
       dots
         .append("circle")
-        // .attr("data-class", function (dp) {
-        //   return dp[3];
-        // })
-        // .on("mouseover", function (dp) {
-        //   var id = "." + d3.select(this).attr("data-class");
-        //   $(id).css("fill", "pink");
-        // })
-        // .on("mouseout", function (dp) {
-        //   var id = "." + d3.select(this).attr("data-class");
-        //   $(id).css("fill", "#fdfdfd");
-        // })
+        .attr("class", function (dp) {
+          return dp[3] + " hovercursor";
+        })
+        .on("mouseover", function (dp) {
+          var id = "." + d3.select(this).attr("class").split(" ")[0];
+
+          $(id).attr("r", "10");
+        })
+        .on("mouseout", function (dp) {
+          var id = "." + d3.select(this).attr("class").split(" ")[0];
+
+          $(id).attr("r", "5");
+        })
         .attr("cx", function (dp) {
           return dp[0];
         })
         .attr("cy", function (dp) {
           return dp[1];
         })
-        .attr("r", 3)
+        .attr("r", 5)
         .style("fill", function (dp) {
           return dp[2];
         });
       dots
         .append("text")
-        .attr("data-class", function (dp) {
-          return dp[3];
+        .attr("class", function (dp) {
+          return dp[3] + " hovercursor";
         })
         .on("mouseover", function (dp) {
-          var id = "." + d3.select(this).attr("data-class");
-          $(id).css("fill", "pink");
+          var id = "." + d3.select(this).attr("class").split(" ")[0];
+          $(id).attr("r", "10");
         })
         .on("mouseout", function (dp) {
-          var id = "." + d3.select(this).attr("data-class");
-          $(id).css("fill", "#fdfdfd");
+          var id = "." + d3.select(this).attr("class").split(" ")[0];
+
+          $(id).attr("r", "5");
         })
         .attr("dx", function (dp) {
-          return dp[0];
+          return dp[0] + 5;
         })
         .attr("dy", function (dp) {
-          return dp[1];
+          return dp[1] - 5;
         })
         .text(function (dp) {
           return dp[0].toString() + "," + dp[1].toString();
@@ -272,6 +288,7 @@
 
     var leafNodeID = {};
     var treeNodeID = 0;
+    var leafIDCounter = -1;
     // followed are the rangeTree Algorithm
     function createNode(
       isleaf,
@@ -283,18 +300,18 @@
       x = null,
       y = null
     ) {
-      // var id = -1;
-      // if (isleaf) {
-      //   var leafkey = val[0] + ";" + val[1];
-      //   if (leafkey in leafNodeID) {
-      //     id = leafNodeID[leafkey];
-      //   } else {
-      //     id = treeNodeID++;
-      //     leafNodeID[leafkey] = id;
-      //   }
-      // } else {
-      //   id = treeNodeID++;
-      // }
+      var id = -1;
+      var leafID = null;
+      if (isleaf) {
+        var leafkey = val[0] + ";" + val[1];
+        if (leafkey in leafNodeID) {
+          leafID = leafNodeID[leafkey];
+        } else {
+          leafID = leafIDCounter--;
+          leafNodeID[leafkey] = leafID;
+        }
+      }
+      id = treeNodeID++;
       return {
         val: val,
         left: left,
@@ -302,7 +319,8 @@
         assoc: assoc,
         isleaf: isleaf,
         parent: parent,
-        id: treeNodeID++,
+        id: id,
+        leafID: leafID,
       };
     }
 
@@ -348,8 +366,140 @@
       }
     }
 
+    function drawVisiting(node, alignment, range) {
+      var xl = range.xleft;
+      var xr = range.xright;
+      var yb = range.ybottom;
+      var yt = range.ytop;
+      var p = node;
+      var smaller = 0;
+      var bigger = 0;
+      if (alignment) {
+        smaller = xl;
+        bigger = xr;
+      } else {
+        smaller = yb;
+        bigger = yt;
+      }
+      var messageNumber = numMessage++;
+      var isSplit = false;
+      if (p.isleaf) {
+        if (alignment) {
+          if (smaller <= p.val[0] && bigger >= p.val[0]) {
+            isSplit = true;
+          }
+        } else {
+          if (smaller <= p.val[1] && bigger >= p.val[1]) {
+            isSplit = true;
+          }
+        }
+      } else {
+        if (smaller <= p.val && bigger >= p.val) {
+          isSplit = true;
+        }
+      }
+      var directionToGo = "";
+      if (!node.isleaf && !isSplit) {
+        if (bigger <= node.val) {
+          directionToGo +=
+            bigger.toString() +
+            " <= " +
+            node.val.toString() +
+            ", try visiting its left child";
+        } else {
+          directionToGo +=
+            bigger.toString() +
+            " > " +
+            node.val.toString() +
+            ", try visiting its right child";
+        }
+      }
+      var text =
+        "Step " +
+        messageNumber.toString() +
+        ". Visiting node: " +
+        (node.isleaf ? node.val[0] + "," + node.val[1] : node.val) +
+        "..." +
+        directionToGo;
+
+      text += isSplit ? "found! Should start visiting both left and right" : "";
+      treeSVG
+        .append("text")
+        .attr("class", node.id + "node " + node.id + "explain")
+        .attr("dx", startingMessageX)
+        .attr("dy", startingMessageY + messageNumber * messageRange)
+        .text(text)
+        .on("mouseover", function (dp) {
+          var id = "." + d3.select(this).attr("class").split(" ")[0];
+          $(id).attr("r", "10");
+        })
+        .on("mouseout", function (dp) {
+          var id = "." + d3.select(this).attr("class").split(" ")[0];
+          $(id).attr("r", "5");
+        })
+        .style("fill", "#fdfdfd");
+    }
+    function drawS(node, alignment, range) {
+      treeSVG
+        .append("text")
+        .attr("dx", node.x - 5)
+        .attr("dy", node.y - 10)
+        .text("S")
+        .style("fill", "pink");
+    }
+
+    function drawFindSplit(range, alignment) {
+      var xl = range.xleft;
+      var xr = range.xright;
+      var yb = range.ybottom;
+      var yt = range.ytop;
+      var smaller = 0;
+      var bigger = 0;
+      if (alignment) {
+        smaller = xl;
+        bigger = xr;
+      } else {
+        smaller = yb;
+        bigger = yt;
+      }
+
+      var messageNumber = numMessage++;
+      var text =
+        "Step " +
+        messageNumber.toString() +
+        ". Looking for a " +
+        (alignment ? "horizontal" : "vertial") +
+        " split node within the range [" +
+        smaller +
+        "," +
+        bigger +
+        "]";
+      treeSVG
+        .append("text")
+        .attr("dx", startingMessageX)
+        .attr("dy", startingMessageY + messageNumber * messageRange)
+        .text(text)
+        .style("fill", "#fdfdfd");
+    }
+
+    function drawNotFindSplit() {
+      var messageNumber = numMessage++;
+      var text =
+        "Step " + messageNumber.toString() + ". Didn't find any split node...";
+      treeSVG
+        .append("text")
+        .attr("dx", startingMessageX)
+        .attr("dy", startingMessageY + messageNumber * messageRange)
+        .text(text)
+        .style("fill", "#fdfdfd");
+    }
+
     // due to degeneracy, split node needs to be more generous
-    async function findSplitNode(node, range, alignment = true) {
+    async function findSplitNode(node, range, alignment = true, draw = true) {
+      if (draw) {
+        drawFindSplit(range, alignment);
+      }
+
       var xl = range.xleft;
       var xr = range.xright;
       var yb = range.ybottom;
@@ -365,35 +515,44 @@
         bigger = yt;
       }
       while (p !== null) {
-        var id = "." + p.id + "node";
-        $(id).css("fill", "pink");
+        if (draw) {
+          var id = "." + p.id + "node";
+          $(id).css("fill", "pink");
+          drawVisiting(p, alignment, range);
+        }
 
         if (p.isleaf) {
           // leaf node, so just report it to solve an important bug
+          // if alignment, comparing to x
           if (alignment) {
             if (smaller <= p.val[0] && bigger >= p.val[0]) {
-              treeSVG
-                .append("text")
-                .attr("dx", p.x - 5)
-                .attr("dy", p.y - 10)
-                .text("S")
-                .style("fill", "pink");
-              await timer(1000);
+              if (draw) {
+                drawS(p, alignment, range);
+                await timer(1000);
+              }
+
               return p;
             } else {
+              if (draw) {
+                await timer(1000);
+                drawNotFindSplit();
+              }
               return null;
             }
           } else {
+            // not alignment, comparing to y
             if (smaller <= p.val[1] && bigger >= p.val[1]) {
-              treeSVG
-                .append("text")
-                .attr("dx", p.x - 5)
-                .attr("dy", p.y - 10)
-                .text("S")
-                .style("fill", "pink");
-              await timer(1000);
+              if (draw) {
+                drawS(p, alignment, range);
+                await timer(1000);
+              }
+
               return p;
             } else {
+              if (draw) {
+                drawNotFindSplit();
+                await timer(1000);
+              }
               return null;
             }
           }
@@ -401,16 +560,15 @@
           // the bigger >= p.val is necessary here (equal sign is necessary)
           // to deal with degeneracy
           if (smaller <= p.val && bigger >= p.val) {
-            treeSVG
-              .append("text")
-              .attr("dx", p.x - 5)
-              .attr("dy", p.y - 10)
-              .text("S")
-              .style("fill", "pink");
-            await timer(1000);
+            if (draw) {
+              drawS(p, alignment, range);
+              await timer(1000);
+            }
             return p;
           } else {
-            await timer(1000);
+            if (draw) {
+              await timer(1000);
+            }
             if (bigger <= p.val) {
               p = p.left;
             } else {
@@ -419,44 +577,95 @@
           }
         }
       }
+      drawNotFindSplit();
       return null;
     }
 
     // check if a point is within range or not
-    async function withinRange(point, range, node) {
+    async function withinRange(point, range, node, draw = true) {
       var x = point[0];
       var y = point[1];
+      var messageNumber = numMessage++;
+      var text =
+        "Step" +
+        messageNumber +
+        ". Checking if node: " +
+        (node.val[0] + "," + node.val[1]) +
+        " is it within query constraints?...";
       if (
         x >= range.xleft &&
         x <= range.xright &&
         y >= range.ybottom &&
         y <= range.ytop
       ) {
-        treeSVG
-          .append("text")
-          .attr("dx", node.x - 10)
-          .attr("dy", node.y + 10)
-          .text("WR")
-          .style("fill", "orange");
-        await timer(1000);
+        if (draw) {
+          treeSVG
+            .append("text")
+            .attr("dx", node.x - 10)
+            .attr("dy", node.y + 10)
+            .text("WR")
+            .style("fill", "orange");
+          var id = "." + node.id + "node";
+          $(id)
+            .not("." + node.id + "explain")
+            .css("fill", "orange");
+          text += "[YES~!]";
+          treeSVG
+            .append("text")
+            .attr("class", node.id + "node " + node.id + "explain")
+            .attr("dx", startingMessageX)
+            .attr("dy", startingMessageY + messageNumber * messageRange)
+            .text(text)
+            .on("mouseover", function (dp) {
+              var id = "." + d3.select(this).attr("class").split(" ")[0];
+              $(id).attr("r", "10");
+            })
+            .on("mouseout", function (dp) {
+              var id = "." + d3.select(this).attr("class").split(" ")[0];
+              $(id).attr("r", "5");
+            })
+            .style("fill", "#fdfdfd");
+          await timer(1000);
+        }
         return true;
       }
+      text += "[NO!!]";
+      treeSVG
+        .append("text")
+        .attr("class", node.id + "node " + node.id + "explain")
+        .attr("dx", startingMessageX)
+        .attr("dy", startingMessageY + messageNumber * messageRange)
+        .text(text)
+        .on("mouseover", function (dp) {
+          var id = "." + d3.select(this).attr("class").split(" ")[0];
+          $(id).attr("r", "10");
+        })
+        .on("mouseout", function (dp) {
+          var id = "." + d3.select(this).attr("class").split(" ")[0];
+          $(id).attr("r", "5");
+        })
+        .style("fill", "#fdfdfd");
       return false;
     }
 
     // report the entire subtree
-    async function reportSubtreeNode(node) {
+    async function reportSubtreeNode(node, draw) {
       if (node === null) {
         return [];
       }
-      console.log("hello");
-      treeSVG
-        .append("text")
-        .attr("dx", node.x - 10)
-        .attr("dy", node.y + 10)
-        .text("RS")
-        .style("fill", "lightgreen");
-      await timer(1000);
+      if (draw) {
+        treeSVG
+          .append("text")
+          .attr("dx", node.x - 10)
+          .attr("dy", node.y + 10)
+          .text("RS")
+          .style("fill", "lightgreen");
+        var id = "." + node.id + "node";
+        $(id).css("fill", "lightgreen");
+        drawReportSubtreeVisit(node);
+        await timer(1000);
+      }
+
       var p = node;
       var stack = [];
       stack.push(p);
@@ -477,30 +686,84 @@
       return result;
     }
 
+    function drawReportSubtreeVisit(node) {
+      var messageNumber = numMessage++;
+      var text =
+        "Step " +
+        messageNumber.toString() +
+        ". Report entire subtree of node: " +
+        (node.isleaf ? node.val[0] + "," + node.val[1] : node.val) +
+        ". All constraints satisfied";
+      treeSVG
+        .append("text")
+        .attr("class", node.id + "node " + node.id + "explain")
+        .attr("dx", startingMessageX)
+        .attr("dy", startingMessageY + messageNumber * messageRange)
+        .text(text)
+        .on("mouseover", function (dp) {
+          var id = "." + d3.select(this).attr("class").split(" ")[0];
+          $(id).attr("r", "10");
+        })
+        .on("mouseout", function (dp) {
+          var id = "." + d3.select(this).attr("class").split(" ")[0];
+          $(id).attr("r", "5");
+        })
+        .style("fill", "#fdfdfd");
+    }
+
+    function drawOneDRangeSearchVisit(node) {
+      var messageNumber = numMessage++;
+      var text =
+        "Step " +
+        messageNumber.toString() +
+        ". OneD Range Searching Node: " +
+        (node.isleaf ? node.val[0] + "," + node.val[1] : node.val) +
+        ". All its subtrees satisfy horizontal constraints";
+      treeSVG
+        .append("text")
+        .attr("class", node.id + "node " + node.id + "explain")
+        .attr("dx", startingMessageX)
+        .attr("dy", startingMessageY + messageNumber * messageRange)
+        .text(text)
+        .on("mouseover", function (dp) {
+          var id = "." + d3.select(this).attr("class").split(" ")[0];
+          $(id).attr("r", "10");
+        })
+        .on("mouseout", function (dp) {
+          var id = "." + d3.select(this).attr("class").split(" ")[0];
+          $(id).attr("r", "5");
+        })
+        .style("fill", "#fdfdfd");
+    }
+
     // range search on the y axis
-    async function oneDRangeSearch(node, range) {
+    async function oneDRangeSearch(node, range, draw) {
       var xl = range.xleft;
       var xr = range.xright;
       var yb = range.ybottom;
       var yt = range.ytop;
       // console.log("oneDRangeSearch");
-      var id = "." + node.id + "node";
-      $(id).css("fill", "lightblue");
-      await timer(1000);
+      if (draw) {
+        var id = "." + node.id + "node";
+        $(id).css("fill", "lightblue");
+        drawOneDRangeSearchVisit(node);
+        await timer(1000);
+      }
+
       if (node.isleaf) {
-        if (await withinRange(node.val, range, node)) {
+        if (await withinRange(node.val, range, node, draw)) {
           return [node.val];
         }
         return [];
       }
-      var vsplit = await findSplitNode(node.assoc, range, false);
+      var vsplit = await findSplitNode(node.assoc, range, false, draw);
       // console.log("oneDRange Split Node", vsplit);
       if (vsplit === null) {
         return [];
       }
 
       if (vsplit.isleaf) {
-        if (await withinRange(vsplit.val, range, vsplit)) {
+        if (await withinRange(vsplit.val, range, vsplit, draw)) {
           return [vsplit.val];
         } else {
           return [];
@@ -509,61 +772,101 @@
         var vl = vsplit.left;
         var resultingData = [];
         while (!vl.isleaf) {
-          var id = "." + vl.id + "node";
-          $(id).css("fill", "pink");
-          await timer(1000);
+          if (draw) {
+            var id = "." + vl.id + "node";
+            $(id).css("fill", "pink");
+            drawTwoDRangeVisit(vl, range);
+            await timer(1000);
+          }
+
           if (yb <= vl.val) {
             resultingData = resultingData.concat(
-              await reportSubtreeNode(vl.right)
+              await reportSubtreeNode(vl.right, draw)
             );
             vl = vl.left;
           } else {
             vl = vl.right;
           }
         }
-        var id = "." + vl.id + "node";
-        $(id).css("fill", "pink");
-        await timer(1000);
-        if (await withinRange(vl.val, range, vl)) {
+        if (draw) {
+          var id = "." + vl.id + "node";
+          $(id).css("fill", "pink");
+          drawTwoDRangeVisit(vl, range);
+          await timer(1000);
+        }
+
+        if (await withinRange(vl.val, range, vl, draw)) {
           resultingData.push(vl.val);
         }
         var vr = vsplit.right;
         while (!vr.isleaf) {
-          var id = "." + vr.id + "node";
-          $(id).css("fill", "lightblue");
-          await timer(1000);
+          if (draw) {
+            var id = "." + vr.id + "node";
+            $(id).css("fill", "pink");
+            drawTwoDRangeVisit(vr, range);
+            await timer(1000);
+          }
+
           if (yt >= vr.val) {
             resultingData = resultingData.concat(
-              await reportSubtreeNode(vr.left)
+              await reportSubtreeNode(vr.left, draw)
             );
             vr = vr.right;
           } else {
             vr = vr.left;
           }
         }
-        var id = "." + vr.id + "node";
-        $(id).css("fill", "pink");
-        await timer(1000);
-        if (await withinRange(vr.val, range, vr)) {
+        if (draw) {
+          var id = "." + vr.id + "node";
+          $(id).css("fill", "pink");
+          drawTwoDRangeVisit(vr, range);
+          await timer(1000);
+        }
+
+        if (await withinRange(vr.val, range, vr, draw)) {
           resultingData.push(vr.val);
         }
         return resultingData;
       }
     }
 
-    async function twoDRangeSearch(node, range) {
+    function drawTwoDRangeVisit(node, range) {
+      var messageNumber = numMessage++;
+      var text =
+        "Step " +
+        messageNumber.toString() +
+        ". Visiting " +
+        (node.isleaf ? node.val[0] + "," + node.val[1] : node.val);
+      treeSVG
+        .append("text")
+        .attr("class", node.id + "node " + node.id + "explain")
+        .attr("dx", startingMessageX)
+        .attr("dy", startingMessageY + messageNumber * messageRange)
+        .text(text)
+        .on("mouseover", function (dp) {
+          var id = "." + d3.select(this).attr("class").split(" ")[0];
+          $(id).attr("r", "10");
+        })
+        .on("mouseout", function (dp) {
+          var id = "." + d3.select(this).attr("class").split(" ")[0];
+          $(id).attr("r", "5");
+        })
+        .style("fill", "#fdfdfd");
+    }
+
+    async function twoDRangeSearch(node, range, draw = true) {
       var xl = range.xleft;
       var xr = range.xright;
       var yb = range.ybottom;
       var yt = range.ytop;
-      var vsplit = await findSplitNode(node, range);
+      var vsplit = await findSplitNode(node, range, true, draw);
 
       // console.log("twoDSplitNode", vsplit);
       if (vsplit === null) {
         return [];
       }
       if (vsplit.isleaf) {
-        if (await withinRange(vsplit.val, range, vsplit)) {
+        if (await withinRange(vsplit.val, range, vsplit, draw)) {
           return [vsplit.val];
         } else {
           return [];
@@ -572,51 +875,68 @@
         var vl = vsplit.left;
         var resultingData = [];
         while (!vl.isleaf) {
-          var id = "." + vl.id + "node";
-          $(id).css("fill", "pink");
-          await timer(1000);
+          if (draw) {
+            var id = "." + vl.id + "node";
+            $(id).css("fill", "pink");
+            drawTwoDRangeVisit(vl, range);
+            await timer(1000);
+          }
+
           if (xl <= vl.val) {
             // console.log("xl <= vl.val, searching vl.right.assoc");
             resultingData = resultingData.concat(
-              await oneDRangeSearch(vl.right, range)
+              await oneDRangeSearch(vl.right, range, draw)
             );
             vl = vl.left;
           } else {
             vl = vl.right;
           }
         }
-        var id = "." + vl.id + "node";
-        $(id).css("fill", "pink");
-        await timer(1000);
-        if (await withinRange(vl.val, range, vl)) {
+
+        if (draw) {
+          var id = "." + vl.id + "node";
+          $(id).css("fill", "pink");
+          drawTwoDRangeVisit(vl, range);
+          await timer(1000);
+        }
+
+        if (await withinRange(vl.val, range, vl, draw)) {
           resultingData.push(vl.val);
         }
         var vr = vsplit.right;
         while (!vr.isleaf) {
-          var id = "." + vr.id + "node";
-          $(id).css("fill", "pink");
-          await timer(1000);
+          if (draw) {
+            var id = "." + vr.id + "node";
+            $(id).css("fill", "pink");
+            drawTwoDRangeVisit(vr, range);
+            await timer(1000);
+          }
+
           if (xr >= vr.val) {
             // console.log("xr > vl.val, searching vr.left.assoc");
             resultingData = resultingData.concat(
-              await oneDRangeSearch(vr.left, range)
+              await oneDRangeSearch(vr.left, range, draw)
             );
             vr = vr.right;
           } else {
             vr = vr.left;
           }
         }
-        var id = "." + vr.id + "node";
-        $(id).css("fill", "pink");
-        await timer(1000);
-        if (await withinRange(vr.val, range, vr)) {
+        if (draw) {
+          var id = "." + vr.id + "node";
+          $(id).css("fill", "pink");
+          drawTwoDRangeVisit(vr, range);
+          await timer(1000);
+        }
+
+        if (await withinRange(vr.val, range, vr, draw)) {
           resultingData.push(vr.val);
         }
         return resultingData;
       }
     }
     var tree = null;
-    function randomized() {
+    function randomizedQuery() {
       var randomizedRange = getRandomRange();
       updateUserInput(
         randomizedRange.xleft,
@@ -624,7 +944,9 @@
         randomizedRange.xright - randomizedRange.xleft,
         randomizedRange.ytop - randomizedRange.ybottom
       );
-      updateUserInputRange();
+      refreshSvg();
+    }
+    function randomized() {
       points = getRandomPoints(8);
       for (let i = 0; i < points.length; i++) {
         if (dps.length < 16) {
@@ -652,18 +974,21 @@
       tree = build2DRangeTree(copydps);
       console.log(tree);
       await drawPoints(tree);
-
       document.getElementById("findPoints").disabled = false;
       document.getElementById("buildTree").disabled = false;
     }
     // find points
     async function findPoints() {
       // reinitializing
+      document.getElementById("buildTree").disabled = true;
       document.getElementById("findPoints").disabled = true;
+      document.getElementById("randomizedPoint").disabled = true;
+      document.getElementById("randomizedQuery").disabled = true;
       // range
-      updateUserInputRange();
+      refreshSvg();
       var range = userInputRange;
       var inRangeData = await twoDRangeSearch(tree, range);
+
       for (let i = 0; i < inRangeData.length; i++) {
         const inRange = inRangeData[i];
         for (let j = 0; j < dps.length; j++) {
@@ -674,31 +999,48 @@
         }
       }
       refreshSvg();
+      document.getElementById("buildTree").disabled = false;
+      document.getElementById("randomizedPoint").disabled = false;
+      document.getElementById("randomizedQuery").disabled = false;
     }
 
     var treeData = [];
     function drawTreeNode() {
       var dots = treeSVG.selectAll("g").data(treeData).enter().append("g");
-      // dots
-      //   .append("circle")
-      //   .attr("class", function (dp) {
-      //     return dp[0].id.toString() + "nodeassoc";
-      //   })
-      //   .attr("cx", function (dp) {
-      //     return dp[0].x + 10;
-      //   })
-      //   .attr("cy", function (dp) {
-      //     return dp[0].y + 10;
-      //   })
-      //   .attr("r", 10)
-      //   .style("opacity", "0")
-      //   .style("fill", function (dp) {
-      //     return dp[1];
-      //   });
       dots
         .append("circle")
         .attr("class", function (dp) {
+          if (dp[0].leafID) {
+            return (
+              dp[0].id.toString() +
+              "node hovercursor " +
+              dp[0].leafID.toString() +
+              "leaf"
+            );
+          }
           return dp[0].id.toString() + "node hovercursor";
+        })
+        .on("mouseover", function (dp) {
+          var classes = d3.select(this).attr("class").split(" ");
+          var id = "";
+          if (classes.length === 3) {
+            id = "." + classes[2];
+            $(id).attr("r", "10");
+          }
+          id = "." + classes[0];
+          var explainer = id + "." + id.match(/\d+/) + "explain";
+          $(explainer).css("fill", d3.select(this).style("fill"));
+        })
+        .on("mouseout", function (dp) {
+          var classes = d3.select(this).attr("class").split(" ");
+          var id = "";
+          if (classes.length === 3) {
+            id = "." + classes[2];
+            $(id).attr("r", "5");
+          }
+          id = "." + classes[0];
+          var explainer = id + "." + id.match(/\d+/) + "explain";
+          $(explainer).css("fill", "#fdfdfd");
         })
         .attr("cx", function (dp) {
           return dp[0].x;
@@ -707,26 +1049,43 @@
           return dp[0].y;
         })
         .attr("r", 5)
-        // .on("click", function (dp) {
-        //   var id = "." + d3.select(this).attr("class").split(" ")[0];
-        //   id += "assoc";
-        //   $(id).css("opacity", "1");
-        // })
-        // .on("mouseover", function (dp) {
-        //   var id = "." + d3.select(this).attr("class").split(" ")[0];
-        //   $(id).css("fill", "pink");
-        // })
-        // .on("mouseout", function (dp) {
-        //   var id = "." + d3.select(this).attr("class").split(" ")[0];
-        //   $(id).css("fill", "#fdfdfd");
-        // })
         .style("fill", function (dp) {
           return dp[1];
         });
       dots
         .append("text")
         .attr("class", function (dp) {
+          if (dp[0].leafID) {
+            return (
+              dp[0].id.toString() +
+              "node hovercursor " +
+              dp[0].leafID.toString() +
+              "leaf"
+            );
+          }
           return dp[0].id.toString() + "node hovercursor";
+        })
+        .on("mouseover", function (dp) {
+          var classes = d3.select(this).attr("class").split(" ");
+          var id = "";
+          if (classes.length === 3) {
+            id = "." + classes[2];
+            $(id).attr("r", "10");
+          }
+          id = "." + classes[0];
+          var explainer = id + "." + id.match(/\d+/) + "explain";
+          $(explainer).css("fill", d3.select(this).style("fill"));
+        })
+        .on("mouseout", function (dp) {
+          var classes = d3.select(this).attr("class").split(" ");
+          var id = "";
+          if (classes.length === 3) {
+            id = "." + classes[2];
+            $(id).attr("r", "5");
+          }
+          id = "." + classes[0];
+          var explainer = id + "." + id.match(/\d+/) + "explain";
+          $(explainer).css("fill", "#fdfdfd");
         })
         .attr("dx", function (dp) {
           return dp[0].x + 10;
@@ -734,19 +1093,6 @@
         .attr("dy", function (dp) {
           return dp[0].y + 5;
         })
-        // .on("click", function (dp) {
-        //   var id = "." + d3.select(this).attr("class").split(" ")[0];
-        //   id += "assoc";
-        //   $(id).css("opacity", "1");
-        // })
-        // .on("mouseover", function (dp) {
-        //   var id = "." + d3.select(this).attr("class").split(" ")[0];
-        //   $(id).css("fill", "pink");
-        // })
-        // .on("mouseout", function (dp) {
-        //   var id = "." + d3.select(this).attr("class").split(" ")[0];
-        //   $(id).css("fill", "#fdfdfd");
-        // })
         .text(function (dp) {
           if (Array.isArray(dp[0].val)) {
             return dp[0].val.slice(0, 2).toString();
@@ -839,8 +1185,8 @@
       }
       var p = node;
       var stack = [];
-      var initX = $("#tree").width() / 2 - 10;
-      var initY = 250;
+      var initX = $("#tree").width() / 2 - 20;
+      var initY = 280;
       var levelRange = 250;
       var nodeRange = 52;
       var maxlevel = 0;
@@ -918,15 +1264,15 @@
     function getRandomRange() {
       var w = $("#plane").width();
       var h = $("#plane").height();
-      var xl = getRandomInt(0, w / 2);
-      var xr = getRandomInt(w / 2, w);
-      var yt = getRandomInt(h / 2, h);
-      var yb = getRandomInt(0, h / 2);
+      var xl = getRandomInt(0, w);
+      var xr = getRandomInt(0, w);
+      var yt = getRandomInt(0, h);
+      var yb = getRandomInt(0, h);
       var range = {
-        xleft: xl,
-        xright: xr,
-        ytop: yt,
-        ybottom: yb,
+        xleft: Math.min(xl, xr),
+        xright: Math.max(xl, xr),
+        ytop: Math.max(yt, yb),
+        ybottom: Math.min(yt, yb),
       };
       return range;
     }
@@ -939,61 +1285,63 @@
       }
       return points;
     }
-    // function testRangeSearch(n) {
-    //   // randomly generate 100 points
-    //   // randomly choose four values as the range
-    //   // do a search, and do a n^2 search
-    //   // compare the result
-    //   var points = getRandomPoints(n);
-    //   var range = getRandomRange();
-    //   var tree = build2DRangeTree(points);
-    //   var inRangeData = twoDRangeSearch(tree, range);
-    //   var validation = [];
-    //   for (let index = 0; index < points.length; index++) {
-    //     const element = points[index];
-    //     if (await withinRange(element, range)) {
-    //       validation.push(element);
-    //     }
-    //   }
-    //   for (let index = 0; index < validation.length; index++) {
-    //     const element = validation[index];
-    //     var found = false;
-    //     for (let j = 0; j < inRangeData.length; j++) {
-    //       const algoFound = inRangeData[j];
-    //       if (algoFound[0] == element[0] && algoFound[1] == element[1]) {
-    //         found = true;
-    //         break;
-    //       }
-    //     }
-    //     if (found === false) {
-    //       console.log(range);
-    //       console.log(points);
-    //       console.log(tree);
-    //       console.log(inRangeData);
-    //       console.log(validation);
-    //       console.log("couldnot find sth");
-    //       return false;
-    //     }
-    //   }
-    //   return inRangeData.length === validation.length ? true : false;
-    // }
 
-    // // n, number of tests
-    // // m, number of points per test
-    // function multiTest(n, m) {
-    //   console.log(
-    //     "running testing for ",
-    //     n,
-    //     "iterations with ",
-    //     m,
-    //     "test points"
-    //   );
-    //   var successCount = 0;
-    //   var failureCount = 0;
-    //   for (let index = 0; index < n; index++) {
-    //     testRangeSearch(m) ? (successCount += 1) : (failureCount += 1);
-    //   }
-    //   console.log("success rate:", successCount, "/", n);
-    // }
+    async function testRangeSearch(n) {
+      // randomly generate 100 points
+      // randomly choose four values as the range
+      // do a search, and do a n^2 search
+      // compare the result
+      var points = getRandomPoints(n);
+      var range = getRandomRange();
+      var tree = build2DRangeTree(points);
+      var inRangeData = await twoDRangeSearch(tree, range, false);
+      var validation = [];
+      for (let index = 0; index < points.length; index++) {
+        const element = points[index];
+        if (await withinRange(element, range, null, false)) {
+          validation.push(element);
+        }
+      }
+      for (let index = 0; index < validation.length; index++) {
+        const element = validation[index];
+        var found = false;
+        for (let j = 0; j < inRangeData.length; j++) {
+          const algoFound = inRangeData[j];
+          if (algoFound[0] == element[0] && algoFound[1] == element[1]) {
+            found = true;
+            break;
+          }
+        }
+        if (found === false) {
+          console.log(range);
+          console.log(points);
+          console.log(tree);
+          console.log(inRangeData);
+          console.log(validation);
+          console.log("couldnot find sth");
+          return false;
+        }
+      }
+      return inRangeData.length === validation.length ? true : false;
+    }
+
+    // n, number of tests
+    // m, number of points per test
+    async function multiTest(n, m) {
+      console.log(
+        "running testing for ",
+        n,
+        "iterations with ",
+        m,
+        "test points"
+      );
+      var successCount = 0;
+      var failureCount = 0;
+      for (let index = 0; index < n; index++) {
+        result = await testRangeSearch(m);
+        result ? (successCount += 1) : (failureCount += 1);
+      }
+      console.log("success rate:", successCount, "/", n);
+    }
   </script>
 </html>
