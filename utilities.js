@@ -241,10 +241,11 @@ async function withinRange(point, range, node, draw = true) {
         .attr("dy", node.y + 10)
         .text("WR")
         .style("fill", "orange");
-      var id = "." + node.id + "node";
-      $(id)
-        .not("." + node.id + "explain")
-        .css("fill", "orange");
+      // choose not to color it orange
+      // var id = "." + node.id + "node";
+      // $(id)
+      //   .not("." + node.id + "explain")
+      //   .css("fill", "orange");
       text += "[YES~!]";
       treeSVG
         .append("text")

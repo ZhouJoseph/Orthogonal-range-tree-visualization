@@ -1,6 +1,3 @@
-var leafNodeID = {};
-var treeNodeID = 0;
-var leafIDCounter = -1;
 // followed are the rangeTree Algorithm
 function createNode(
   isleaf,

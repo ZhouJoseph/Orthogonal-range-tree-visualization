@@ -47,13 +47,8 @@ function addPointToPlane(x, y, push = true) {
       document.getElementById("buildTree").disabled = false;
     }
     var leafkey = x + ";" + y;
-    var id = 0;
-    if (leafkey in leafNodeID) {
-      id = leafNodeID[leafkey];
-    } else {
-      id = leafIDCounter--;
-      leafNodeID[leafkey] = id;
-    }
+    var id = leafIDCounter--;
+    leafNodeID[leafkey] = id;
     dps.push([x, y, blackColor, id + "leaf"]);
   }
 

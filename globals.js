@@ -28,3 +28,9 @@ var treeBranch = [];
 
 // points are stored in dps -> data points;
 var dps = [];
+
+var leafNodeID = {};
+// treeNodeID starts from 0 and increase
+var treeNodeID = 0;
+// leafIDCounter starts from -1 and decrease
+var leafIDCounter = -1;
