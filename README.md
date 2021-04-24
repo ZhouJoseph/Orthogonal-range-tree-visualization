@@ -21,23 +21,13 @@ Orthogonal range tree is a two dimensional range tree that enables efficient loo
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
-  <h3 align="center">Best-README-Template</h3>
+  <img src="image/sampletree.png" alt="Logo" width="80" height="80">
+  <h3 align="center">Orthogonal Range Tree</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://github.com/ZhouJoseph/BOrthogonal-range-tree-visualization">View Demo</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization/issues">Report Bug</a>
   </p>
 </p>
 
@@ -48,21 +38,19 @@ Orthogonal range tree is a two dimensional range tree that enables efficient loo
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
+      <a href="#about-range-tree">About Range Tree</a>
       <ul>
+        <li><a href="#about-the-project">About The Project</a></li>
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
@@ -70,11 +58,14 @@ Orthogonal range tree is a two dimensional range tree that enables efficient loo
 </details>
 
 
+<!-- ABOUT Range Tree -->
+## About Range Tree
+Hello, this is Range tree
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+### About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Orthogonal-range-tree-visualization][tree-screenshot]](#)
 
 There are many great README templates available on GitHub, however, I didn't find one that really suit my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
 
@@ -113,14 +104,6 @@ Use this space to show useful examples of how a project can be used. Additional 
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-See the [open issues](https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization/issues) for a list of proposed features (and known issues).
-
-
 <!-- LICENSE -->
 ## License
 Distributed under the MIT License. See `LICENSE` for more information.
@@ -152,4 +135,4 @@ Project Link: [https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization
 [license-url]: https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/kaixuan-zhou-nyu
-[product-screenshot]: images/screenshot.png
+[tree-screenshot]: images/tree.png
