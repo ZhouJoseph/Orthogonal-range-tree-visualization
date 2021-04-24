@@ -1,6 +1,3 @@
-# Orthogonal-range-tree-visualization
-[Project Url](https://zhoujoseph.github.io/Orthogonal-range-tree-visualization/)
-
 # Project Summary
 Orthogonal range tree is a two dimensional range tree that enables efficient lookup of all the points within the query constraints. 
 
@@ -91,45 +88,23 @@ Of course, no one template will serve all projects since your needs may be diffe
 A list of commonly used resources that I find helpful are listed in the acknowledgements.
 
 ### Built With
-
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
-* [Laravel](https://laravel.com)
-
-
+* [D3](https://d3js.org/)
+* [JQuery](https://jquery.com/)
+* [BootStrap](https://getbootstrap.com/)
+* [Bluma](https://bulma.io/)
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
+1. Understand range tree [wiki](https://en.wikipedia.org/wiki/Range_tree)
 2. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization.git
    ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```JS
-   const API_KEY = 'ENTER YOUR API';
-   ```
-
-
+3. That's it. Open index.html in your browser
+4. If you just want to view the project, please simply go [here](https://zhoujoseph.github.io/Orthogonal-range-tree-visualization/)
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -143,45 +118,22 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues).
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
+See the [open issues](https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization/issues) for a list of proposed features (and known issues).
 
 
 <!-- LICENSE -->
 ## License
-
 Distributed under the MIT License. See `LICENSE` for more information.
-
-
 
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Kaixuan Zhou - LinkedIn[@kaixuan-zhou-nyu](https://www.linkedin.com/in/kaixuan-zhou-nyu/) - kaixuan.zhou@nyu.edu
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
-
-
+Project Link: [https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization](https://zhoujoseph.github.io/Orthogonal-range-tree-visualization/)
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
-* [D3](https://d3js.org/)
-* [JQuery](https://jquery.com/)
-* [BootStrap](https://getbootstrap.com/)
-* [Bluma](https://bulma.io/)
 * [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
 * [Img Shields](https://shields.io)
 * [GitHub Pages](https://pages.github.com)
