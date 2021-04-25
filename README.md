@@ -62,7 +62,7 @@ Orthogonal range tree is a two dimensional range tree that enables efficient loo
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![Orthogonal-range-tree-visualization][tree]
+![Orthogonal-range-tree-visualization][coloredtree]
 
 This is the final project deliverables for the course **CS-GY 6703: Computational Geometry** instructed by *[Prof. Boris Aronov](https://engineering.nyu.edu/faculty/boris-aronov)* at **NYU Tandon**.
 
@@ -72,6 +72,7 @@ The plan was to implement a normal 2D range tree without fractional cascading an
 
 <!-- ABOUT Range Tree -->
 ### About Range Tree
+
 A brute force approach would take O(n) time to report all the points within a given range, as we need to iterate through all the points and check if that point locates in the range or not. This type of question is referred to as range quries, and range tree is built with the purpose to answer range searching queries efficiently (faster than linear).
 
 In this project, we focus on orthogonal queries, but it can be optimized to suit other range query types.
@@ -80,6 +81,8 @@ A normal range tree partitions the data by each of its dimensions, and each node
 - construction time: O(nlogn)
 - space complexity: O(nlogn)
 - query time complexity: O(log^d(n) + k) where d is the dimension of the data and k is the #point in range
+
+<img src="[tree]" width="40" height="40" />
 
 There exists an optimized version: store the last dimension in a fractional cascading fashion rather than a tree. The later one increases time complexity for the query of the normal range tree to 
 - O(log^(d-1)(n) + k)
