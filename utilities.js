@@ -205,7 +205,7 @@ async function findSplitNode(node, range, alignment = true, draw = true) {
         if (draw) {
           await timer(timerWait);
         }
-        if (bigger <= p.val) {
+        if (bigger < p.val) {
           p = p.left;
         } else {
           p = p.right;
@@ -221,13 +221,17 @@ async function findSplitNode(node, range, alignment = true, draw = true) {
 async function withinRange(point, range, node, draw = true) {
   var x = point[0];
   var y = point[1];
-  var messageNumber = numMessage++;
-  var text =
-    "Step " +
-    messageNumber +
-    ". Checking if node: " +
-    (node.val[0] + "," + node.val[1]) +
-    " is it within query constraints?...";
+
+  if (draw) {
+    var messageNumber = numMessage++;
+    var text =
+      "Step " +
+      messageNumber +
+      ". Checking if node: " +
+      (node.val[0] + "," + node.val[1]) +
+      " is it within query constraints?...";
+  }
+
   if (
     x >= range.xleft &&
     x <= range.xright &&
@@ -266,22 +270,25 @@ async function withinRange(point, range, node, draw = true) {
     }
     return true;
   }
-  text += "[NO!!]";
-  treeSVG
-    .append("text")
-    .attr("class", node.id + "node " + node.id + "explain")
-    .attr("dx", startingMessageX)
-    .attr("dy", startingMessageY + messageNumber * messageRange)
-    .text(text)
-    .on("mouseover", function (dp) {
-      var id = "." + d3.select(this).attr("class").split(" ")[0];
-      $(id).attr("r", enlargedCircleSize);
-    })
-    .on("mouseout", function (dp) {
-      var id = "." + d3.select(this).attr("class").split(" ")[0];
-      $(id).attr("r", normalCircleSize);
-    })
-    .style("fill", whiteColor);
+  if (draw) {
+    text += "[NO!!]";
+    treeSVG
+      .append("text")
+      .attr("class", node.id + "node " + node.id + "explain")
+      .attr("dx", startingMessageX)
+      .attr("dy", startingMessageY + messageNumber * messageRange)
+      .text(text)
+      .on("mouseover", function (dp) {
+        var id = "." + d3.select(this).attr("class").split(" ")[0];
+        $(id).attr("r", enlargedCircleSize);
+      })
+      .on("mouseout", function (dp) {
+        var id = "." + d3.select(this).attr("class").split(" ")[0];
+        $(id).attr("r", normalCircleSize);
+      })
+      .style("fill", whiteColor);
+  }
+
   return false;
 }
 
