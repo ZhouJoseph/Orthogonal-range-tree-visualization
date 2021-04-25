@@ -82,7 +82,7 @@ A normal range tree partitions the data by each of its dimensions, and each node
 - space complexity: O(nlogn)
 - query time complexity: O(log^d(n) + k) where d is the dimension of the data and k is the #point in range
 
-<img src="[tree]" width="40" height="40" />
+![Orthogonal-range-tree-visualization][tree]
 
 There exists an optimized version: store the last dimension in a fractional cascading fashion rather than a tree. The later one increases time complexity for the query of the normal range tree to 
 - O(log^(d-1)(n) + k)
@@ -102,14 +102,19 @@ The two dimensional range search algorithm can be decomposed into several smalle
 5. one dimensional range search: similarily, first find the splite node **S**, and here if we are visiting the left subtree of **S**, let's call it **L**, and if **L**'s value is less than or equal to **Xl**, then we can conclude that all y value of the nodes to the right **L** are within the range. So we can simply report the entire right subtree of **L**. Because we already know that the points that we are visiting are within range horizontally, and now we know that this subtree is within range vertically. So all the points are definitely within range.
 6. One difficulty is to deal with degeneracies and edge case handling. To do that, I built a random points and query generator, and a test function which I can specify how many times and how many points to run the test with. And fine tune the function comparison's and algorithms. The major difference I notice is that to deal with degenracy in range tree, we need to change many signs of the comparison from simply "<" or ">" to "<=" and ">="
 
+![Orthogonal-range-tree-visualization][buildtree]
+
 #### Visualization's Side
 In order to have an interactive design, I would want a way to connect the points in the plane canvas and the nodes in the tree canvas. So I simply assigned an id for each of the node that gets created, and use that node id as part of the element's class name
 
 Later on, I found out that I need to treat leaf nodes and normal nodes differently, because I want to highlight all the nodes that represents the same point in the plane canvas in the tree canvas and vice versa.
 
+![Orthogonal-range-tree-visualization][search]
 However, as I feel like just color coding the execution is not very enough, I added a text explaination for each of the step that is taking place. I would like to connect these text message with its corresponding nodes as well, but that comes another problem: using one id is not enough. Because if that's the case, when a message is related to a leaf node, I would highlight all the other leaf nodes but not that specific leaf node.
 
 I ended up using two different ids, and assign the nodes two different classnames with two id being part of the name, something like : id+"node" and leafID+"leaf". This is the only solution that came to my mind, if there's a neater solution, please let me know.
+
+![Orthogonal-range-tree-visualization][interactive]
 
 ### Built With
 * [D3](https://d3js.org/)
@@ -164,3 +169,7 @@ Project Link: [https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization
 [coloredtree]: images/coloredtree.png
 [tree]: images/tree.png
 [plane]: images/plane.png
+[buildtree]: images/buildtree.gif
+[search]: images/search.gif
+[interactive]: images/interactive.gif
+
