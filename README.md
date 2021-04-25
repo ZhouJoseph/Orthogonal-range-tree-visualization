@@ -86,6 +86,27 @@ There exists an optimized version: store the last dimension in a fractional casc
 
 ### Implementation Difficulties
 
+#### Algorithm's Side
+For a two dimensional range tree, the horizontal tree leaves are sorted by its x value from small to large, while the vertical tree is sorted by the data's y value from small to large.
+
+The two dimensional range search algorithm can be decomposed into several smaller parts:
+1. find horizontal tree's split node **S**
+3. iterating split nodes' left and right, respectively
+4. compare the node's value with the range
+  - if we are visiting the left subtree of **S**, let's call it **L**, and if **L**'s value is less than or equal to **Xl**, then we can conclude that all x value of the nodes to the right **L** are within the range. So we can simply do a one dimensional range search on **L**'s right child, and move the pointer to the left child of **L**.
+  - Otherwise we can simply visit the right child of **L**
+  - Logic is reversed for the right subtree of **S**
+5. one dimensional range search: similarily, first find the splite node **S**, and here if we are visiting the left subtree of **S**, let's call it **L**, and if **L**'s value is less than or equal to **Xl**, then we can conclude that all y value of the nodes to the right **L** are within the range. So we can simply report the entire right subtree of **L**. Because we already know that the points that we are visiting are within range horizontally, and now we know that this subtree is within range vertically. So all the points are definitely within range.
+6. One difficulty is to deal with degeneracies and edge case handling. To do that, I built a random points and query generator, and a test function which I can specify how many times and how many points to run the test with. And fine tune the function comparison's and algorithms. The major difference I notice is that to deal with degenracy in range tree, we need to change many signs of the comparison from simply "<" or ">" to "<=" and ">="
+
+#### Visualization's Side
+In order to have an interactive design, I would want a way to connect the points in the plane canvas and the nodes in the tree canvas. So I simply assigned an id for each of the node that gets created, and use that node id as part of the element's class name
+
+Later on, I found out that I need to treat leaf nodes and normal nodes differently, because I want to highlight all the nodes that represents the same point in the plane canvas in the tree canvas and vice versa.
+
+However, as I feel like just color coding the execution is not very enough, I added a text explaination for each of the step that is taking place. I would like to connect these text message with its corresponding nodes as well, but that comes another problem: using one id is not enough. Because if that's the case, when a message is related to a leaf node, I would highlight all the other leaf nodes but not that specific leaf node.
+
+I ended up using two different ids, and assign the nodes two different classnames with two id being part of the name, something like : id+"node" and leafID+"leaf". This is the only solution that came to my mind, if there's a neater solution, please let me know.
 
 ### Built With
 * [D3](https://d3js.org/)
