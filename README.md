@@ -66,12 +66,26 @@ Orthogonal range tree is a two dimensional range tree that enables efficient loo
 
 This is the final project deliverables for the course **CS-GY 6703: Computational Geometry** instructed by *[Prof. Boris Aronov](https://engineering.nyu.edu/faculty/boris-aronov)* at **NYU Tandon**.
 
-It's an individual half a semester project. I haven't tried visualizing anything using pure JavaScript before. And, while I was googling around, I found plenty of KD-tree visualization projects, but haven't found any range tree visualization projects. So I thought that this could be a challenging and interesting project. The plan was to implement a 2D range tree and visualize its construction as well as searching execution using just HTML, CSS and JavaScript, and host it on GitHub pages. But in the middle of the implementation, I think that there's nothing much that you can do to visualize its construction, so I focus more on delivering a understandable, step-by-step visualization for the search part.
+It's an individual half a semester project. I haven't tried visualizing anything using pure JavaScript before. And, while I was googling around, I found plenty of KD-tree visualization projects, but haven't found any range tree visualization projects. So I thought that this could be a challenging and interesting project. 
 
+The plan was to implement a normal 2D range tree without fractional cascading and visualize its construction as well as searching execution using just HTML, CSS and JavaScript, and host it on GitHub pages. But in the middle of the implementation, I think that there's nothing much that you can do to visualize its construction, so I focus more on delivering a understandable, step-by-step visualization for the search part.
 
 <!-- ABOUT Range Tree -->
 ### About Range Tree
-Hello, this is Range tree
+A brute force approach would take O(n) time to report all the points within a given range, as we need to iterate through all the points and check if that point locates in the range or not. This type of question is referred to as range quries, and range tree is built with the purpose to answer range searching queries efficiently (faster than linear).
+
+In this project, we focus on orthogonal queries, but it can be optimized to suit other range query types.
+
+A normal range tree partitions the data by each of its dimensions, and each node would have an additional range tree partitioned by another dimension as its associate structure.
+- construction time: O(nlogn)
+- space complexity: O(nlogn)
+- query time complexity: O(log^d(n) + k) where d is the dimension of the data and k is the #point in range
+
+There exists an optimized version: store the last dimension in a fractional cascading fashion rather than a tree. The later one increases time complexity for the query of the normal range tree to 
+- O(log^(d-1)(n) + k)
+
+### Implementation Difficulties
+
 
 ### Built With
 * [D3](https://d3js.org/)
