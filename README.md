@@ -21,7 +21,7 @@ Orthogonal range tree is a two dimensional range tree that enables efficient loo
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <img src="image/sampletree.png" alt="Logo" width="80" height="80">
+<!--   <img src="image/sampletree.png" alt="Logo" width="80" height="80"> -->
   <h3 align="center">Orthogonal Range Tree</h3>
 
   <p align="center">
@@ -62,7 +62,7 @@ Orthogonal range tree is a two dimensional range tree that enables efficient loo
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Orthogonal-range-tree-visualization][tree-screenshot]](#)
+![Orthogonal-range-tree-visualization][tree]
 
 This is the final project deliverables for the course **CS-GY 6703: Computational Geometry** instructed by *[Prof. Boris Aronov](https://engineering.nyu.edu/faculty/boris-aronov)* at **NYU Tandon**.
 
@@ -158,4 +158,6 @@ Project Link: [https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization
 [license-url]: https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/kaixuan-zhou-nyu
-[tree-screenshot]: images/coloredtree.png
+[coloredtree]: images/coloredtree.png
+[tree]: images/tree.png
+[plane]: images/plane.png
