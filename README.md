@@ -102,7 +102,6 @@ The two dimensional range search algorithm can be decomposed into several smalle
 5. one dimensional range search: similarily, first find the splite node **S**, and here if we are visiting the left subtree of **S**, let's call it **L**, and if **L**'s value is less than or equal to **Xl**, then we can conclude that all y value of the nodes to the right **L** are within the range. So we can simply report the entire right subtree of **L**. Because we already know that the points that we are visiting are within range horizontally, and now we know that this subtree is within range vertically. So all the points are definitely within range.
 6. One difficulty is to deal with degeneracies and edge case handling. To do that, I built a random points and query generator, and a test function which I can specify how many times and how many points to run the test with. And fine tune the function comparison's and algorithms. The major difference I notice is that to deal with degenracy in range tree, we need to change many signs of the comparison from simply "<" or ">" to "<=" and ">="
 
-![Orthogonal-range-tree-visualization][buildtree]
 
 #### Visualization's Side
 In order to have an interactive design, I would want a way to connect the points in the plane canvas and the nodes in the tree canvas. So I simply assigned an id for each of the node that gets created, and use that node id as part of the element's class name
