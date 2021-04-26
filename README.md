@@ -125,9 +125,16 @@ In this way, by having the text explaination tied to a node, the user can then s
 * [BootStrap](https://getbootstrap.com/)
 * [Bluma](https://bulma.io/)
 
+<!-- ACKNOWLEDGEMENTS -->
+## Acknowledgements
+* [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
+* [GitHub Pages](https://pages.github.com)
+
 
 ### My Own Work
-I use d3.js as a assitance to draw the points and lines and texts on svgs, and bootstrap and bulma for some element's css styling. Except as described above, all the work on this project is my own, that includes: the entire range tree algorithm (construction & searching & testing), the entire interactive user interface and the entire visualization algorithm.
+I use d3.js as a assitance to draw the points and lines and texts on svgs, and bootstrap and bulma for some element's css styling. I also use Best-Readme-Template as the starter template for this markdown, and GitHub Pages for hosting my visualization implementation. 
+
+Except as described above, all the work on this project is my own, that includes: the entire range tree algorithm (construction & searching & testing), the entire interactive user interface and the entire visualization algorithm.
 
 ![Signature-Kaixuan-Zhou][signature]
 
@@ -156,11 +163,6 @@ Kaixuan Zhou - LinkedIn[@kaixuan-zhou-nyu](https://www.linkedin.com/in/kaixuan-z
 
 Project Link: [https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization](https://zhoujoseph.github.io/Orthogonal-range-tree-visualization/)
 
-<!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
-* [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
