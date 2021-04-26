@@ -44,6 +44,7 @@ Orthogonal range tree is a two dimensional range tree that enables efficient loo
         <li><a href="#implementation-details-and-difficulties">Implementation Details and Difficulties</a></li>
         <li><a href="#built-with">Built With</a></li>
         <li><a href="#my-own-work">My Own Work</a></li>
+        <li><a href="#acknowledgements">Acknowledgements</a></li>
       </ul>
     </li>
     <li>
@@ -54,7 +55,6 @@ Orthogonal range tree is a two dimensional range tree that enables efficient loo
     </li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
