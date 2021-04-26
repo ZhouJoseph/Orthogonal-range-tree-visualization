@@ -166,7 +166,7 @@ async function drawAssocTree(node, initX, initY, maxlevel) {
     drawTreeBranch();
     treeData.push([n, whiteColor]);
     drawTreeNode();
-    await timer(1);
+    await timer(0);
   }
 }
 
