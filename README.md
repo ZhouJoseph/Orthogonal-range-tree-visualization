@@ -1,4 +1,4 @@
-# Project Summary
+# [Project Summary](https://zhoujoseph.github.io/Orthogonal-range-tree-visualization/)
 Orthogonal range tree is a two dimensional range tree that enables efficient lookup of all the points within the query constraints. 
 
 <!-- PROJECT SHIELDS -->
