@@ -161,7 +161,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Kaixuan Zhou - LinkedIn[@kaixuan-zhou-nyu](https://www.linkedin.com/in/kaixuan-zhou-nyu/) - kaixuan.zhou@nyu.edu
 
-Project Link: [https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization](https://zhoujoseph.github.io/Orthogonal-range-tree-visualization/)
+Project Link: [https://zhoujoseph.github.io/Orthogonal-range-tree-visualization/](https://zhoujoseph.github.io/Orthogonal-range-tree-visualization/)
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
