@@ -41,11 +41,13 @@ Orthogonal range tree is a two dimensional range tree that enables efficient loo
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#about-range-tree">About Range Tree</a></li>
+        <li><a href="#implementation-details-and-difficulties">Implementation Details and Difficulties</a></li>
         <li><a href="#built-with">Built With</a></li>
+        <li><a href="#my-own-work">My Own Work</a></li>
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#how-to-run-the-project">How To Run The Project</a>
       <ul>
         <li><a href="#installation">Installation</a></li>
       </ul>
@@ -66,14 +68,14 @@ Orthogonal range tree is a two dimensional range tree that enables efficient loo
 
 This is the final project deliverables for the course **CS-GY 6703: Computational Geometry** instructed by *[Prof. Boris Aronov](https://engineering.nyu.edu/faculty/boris-aronov)* at **NYU Tandon**.
 
-It's an individual half a semester project. I haven't tried visualizing anything using pure JavaScript before. And, while I was googling around, I found plenty of KD-tree visualization projects, but haven't found any range tree visualization projects. So I thought that this could be a challenging and interesting project. 
+It's an individual half a semester project. I haven't tried visualizing anything using pure JavaScript before. And, while I was googling around, I found plenty of KD-tree visualization projects, but haven't found any range tree visualization projects. So I thought that visualizing a 2D range tree could be both a challenging and interesting project. 
 
-The plan was to implement a normal 2D range tree without fractional cascading and visualize its construction as well as searching execution using just HTML, CSS and JavaScript, and host it on GitHub pages. But in the middle of the implementation, I think that there's nothing much that you can do to visualize its construction, so I focus more on delivering a understandable, step-by-step visualization for the search part.
+The plan was to implement a normal 2D range tree WITHOUT fractional cascading and visualize its construction as well as searching execution using just HTML, CSS and JavaScript, and host it on GitHub pages. But in the middle of the implementation, I think that there's nothing much that I can do to visualize its construction, so I focus more on delivering a understandable, step-by-step visualization for the searching part.
 
 <!-- ABOUT Range Tree -->
 ### About Range Tree
 
-A brute force approach would take O(n) time to report all the points within a given range, as we need to iterate through all the points and check if that point locates in the range or not. This type of question is referred to as range quries, and range tree is built with the purpose to answer range searching queries efficiently (faster than linear).
+A brute force approach would take O(n) time to report all the points within a given rectangle area, as we need to iterate through all the points and check if that point locates in the range or not. This type of question is referred to as range quries, and range tree is built with the purpose to answer range searching queries efficiently (faster than linear).
 
 In this project, we focus on orthogonal queries, but it can be optimized to suit other range query types.
 
@@ -84,10 +86,10 @@ A normal range tree partitions the data by each of its dimensions, and each node
 
 ![Orthogonal-range-tree-visualization][tree]
 
-There exists an optimized version: store the last dimension in a fractional cascading fashion rather than a tree. The later one increases time complexity for the query of the normal range tree to 
+There exists an optimized version: a range three that stores the last dimension in a fractional cascading fashion rather than a tree. Because we don't need to search the tree in the last dimension, thus the optimized range tree improves time complexity for the query of the normal range tree to 
 - O(log^(d-1)(n) + k)
 
-### Implementation Difficulties
+### Implementation Details and Difficulties
 
 #### Algorithm's Side
 For a two dimensional range tree, the horizontal tree leaves are sorted by its x value from small to large, while the vertical tree is sorted by the data's y value from small to large.
@@ -100,18 +102,20 @@ The two dimensional range search algorithm can be decomposed into several smalle
   - Otherwise we can simply visit the right child of **L**
   - Logic is reversed for the right subtree of **S**
 5. one dimensional range search: similarily, first find the splite node **S**, and here if we are visiting the left subtree of **S**, let's call it **L**, and if **L**'s value is less than or equal to **Xl**, then we can conclude that all y value of the nodes to the right **L** are within the range. So we can simply report the entire right subtree of **L**. Because we already know that the points that we are visiting are within range horizontally, and now we know that this subtree is within range vertically. So all the points are definitely within range.
-6. One difficulty is to deal with degeneracies and edge case handling. To do that, I built a random points and query generator, and a test function which I can specify how many times and how many points to run the test with. And fine tune the function comparison's and algorithms. The major difference I notice is that to deal with degenracy in range tree, we need to change many signs of the comparison from simply "<" or ">" to "<=" and ">="
+6. One difficulty is to deal with degeneracies and edge case handling. To do that, I built a random points and query generator, and a test function which I can specify how many times and how many points to run the test with. And fine tune all the comparisons that too place in the searching phase. The major difference I notice is that to deal with degenracy in range tree, we need to change many signs of the comparison from simply "<" or ">" to "<=" and ">=".
 
+![Orthogonal-range-tree-visualization][search]
 
 #### Visualization's Side
 In order to have an interactive design, I would want a way to connect the points in the plane canvas and the nodes in the tree canvas. So I simply assigned an id for each of the node that gets created, and use that node id as part of the element's class name
 
-Later on, I found out that I need to treat leaf nodes and normal nodes differently, because I want to highlight all the nodes that represents the same point in the plane canvas in the tree canvas and vice versa.
+Later on, I found out that I need to treat leaf nodes and normal nodes differently, because I want to highlight all the nodes that represents the same point in the input canvas in the range tree canvas and vice versa.
 
-![Orthogonal-range-tree-visualization][search]
-However, as I feel like just color coding the execution is not very enough, I added a text explaination for each of the step that is taking place. I would like to connect these text message with its corresponding nodes as well, but that comes another problem: using one id is not enough. Because if that's the case, when a message is related to a leaf node, I would highlight all the other leaf nodes but not that specific leaf node.
+However, as I feel like just color coding the execution is not very enough, I added a text explaination for each of the step that is taking place. I would like to connect these text message with its corresponding nodes as well, but that comes another problem: using one id is not enough. Because if I'm using only one id, when a message is related to a leaf node, I would highlight all the other leaf nodes but not that specific leaf node that the message is tied to.
 
 I ended up using two different ids, and assign the nodes two different classnames with two id being part of the name, something like : id+"node" and leafID+"leaf". This is the only solution that came to my mind, if there's a neater solution, please let me know.
+
+In this way, by having the text explaination tied to a node, the user can then simply traces through the text sequences, and see the highlighted nodes in the tree to trace what's going on.
 
 ![Orthogonal-range-tree-visualization][interactive]
 
@@ -121,8 +125,12 @@ I ended up using two different ids, and assign the nodes two different classname
 * [BootStrap](https://getbootstrap.com/)
 * [Bluma](https://bulma.io/)
 
+
+### My Own Work
+I use d3.js as a assitance to draw the points and lines and texts on svgs, and bootstrap and bulma for some element's css styling. I wrote the entire algorithm from scratch and the entire visualization algorithm from scratch.
+
 <!-- GETTING STARTED -->
-## Getting Started
+## How To Run The Project
 
 ### Installation
 
