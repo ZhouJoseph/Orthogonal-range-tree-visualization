@@ -129,20 +129,21 @@ In this way, by having the text explaination tied to a node, the user can then s
 ### My Own Work
 I use d3.js as a assitance to draw the points and lines and texts on svgs, and bootstrap and bulma for some element's css styling. Except as described above, all the work on this project is my own, that includes: the entire range tree algorithm (construction & searching & testing), the entire interactive user interface and the entire visualization algorithm.
 
-![Signature-Kaixuan-Zhou][signed]
+![Signature-Kaixuan-Zhou][signature]
 
 <!-- GETTING STARTED -->
 ## How To Run The Project
 
 ### Installation
 
-1. Understand range tree [wiki](https://en.wikipedia.org/wiki/Range_tree)
+1. Understand what is a range tree, here's the [wiki](https://en.wikipedia.org/wiki/Range_tree)
 2. Clone the repo
    ```sh
    git clone https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization.git
    ```
 3. That's it. Open index.html in your browser
-4. If you just want to view the project, please simply go [here](https://zhoujoseph.github.io/Orthogonal-range-tree-visualization/)
+
+If you just want to view the project, please simply go [here](https://zhoujoseph.github.io/Orthogonal-range-tree-visualization/)
 
 <!-- LICENSE -->
 ## License
@@ -181,4 +182,4 @@ Project Link: [https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization
 [buildtree]: images/buildtree.gif
 [search]: images/search.gif
 [interactive]: images/interactive.gif
-[signed]: images/signed.png
+[signature]: images/sign.png
