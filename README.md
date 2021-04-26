@@ -161,8 +161,8 @@ Project Link: [https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization
 [stars-url]: https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization/stargazers
 [issues-shield]: https://img.shields.io/github/issues/ZhouJoseph/Orthogonal-range-tree-visualization.svg?style=for-the-badge
 [issues-url]: https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization/issues
-[license-shield]: https://img.shields.io/github/license/ZhouJoseph/Orthogonal-range-tree-visualization.svg?style=for-the-badge
-[license-url]: https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization/blob/master/LICENSE.txt
+[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
+[license-url]: https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/kaixuan-zhou-nyu
 [coloredtree]: images/coloredtree.png
