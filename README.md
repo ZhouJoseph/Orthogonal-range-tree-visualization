@@ -107,7 +107,7 @@ The two dimensional range search algorithm can be decomposed into several smalle
 ![Orthogonal-range-tree-visualization][search]
 
 #### Visualization's Side
-In order to have an interactive design, I would want a way to connect the points in the plane canvas and the nodes in the tree canvas. So I simply assigned an id for each of the node that gets created, and use that node id as part of the element's class name
+In order to have an interactive design, I would want a way to connect the points in the input canvas and the nodes in the tree canvas. So I simply assigned an id for each of the node that gets created, and use that node id as part of the element's class name
 
 Later on, I found out that I need to treat leaf nodes and normal nodes differently, because I want to highlight all the nodes that represents the same point in the input canvas in the range tree canvas and vice versa.
 
