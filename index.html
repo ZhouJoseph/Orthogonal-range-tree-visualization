@@ -29,23 +29,26 @@
           <p class="is-size-6">
             It's my personal project:
             <b>2D Orthogonal Range Tree Visualization</b>. <br />
-            - <b><i>The plane canvas:</i></b> is the canvas which holds the
-            points that we are working with.
+            - <b><i>The [Input Points and Queries] Canvas:</i></b> is the canvas
+            which holds the points that we are working with.
             <br />
-            - <b><i>The tree canvas:</i></b> displays the orthogonal range tree
-            generataed from the points in the plane canvas.
+            - <b><i>The [2D Range Tree] Canvas:</i></b> displays the orthogonal
+            range tree generataed from the points in the [Input Points and
+            Queries] Canvas.
           </p>
           <br />
           <p class="is-size-4"><b>How to use it?</b></p>
           <p class="is-size-6">
             <b>1. point inialization:</b><br />
-            - You can enter your own points by clicking on the plane canvas.
+            - You can enter your own points by clicking on the [Input Points and
+            Queries] Canvas.
             <br />
             - Or you can initialize them randomly by clicking the [Randomized 8
-            points Points] button. This button can be pressed twice at most<br />
+            points Points] button. This button can be pressed twice at most (16
+            points)<br />
             <b>2. range inialization:</b><br />
             - You can enter your own range using the four input boxes underneath
-            the plane canvas.
+            the [Input Points and Queries] Canvas.
             <br />
             - Or you can initialize them randomly by clicking the [Randomized
             Query] button. <br />
@@ -61,29 +64,19 @@
             by the range tree with a brute force result.
           </p>
           <br />
-          <p class="is-size-4"><b>Terminologies</b></p>
-          <p class="is-size-6">
-            <b style="color: pink">pink nodes:</b> visited <br />
-            <b style="color: pink">S:</b> Split nodes <br />
-            <b style="color: orange">WR & orange nodes:</b> Within Range, aka,
-            points that satisfied the constraints <br />
-            <b style="color: lightgreen">RS & lightgreen nodes:</b> Report
-            entire Subtree as found points <br />
-            <b style="color: lightblue">lightblue nodes:</b> Where we need to do
-            a search in the assoc structure only, but not its children
-          </p>
         </div>
       </div>
     </section>
     <center>
       <div id="planediv">
         <div class="container">
-          <p class="is-size-4">Plane canvas</p>
+          <p class="is-size-4">Input Points and Queries</p>
         </div>
 
         <div id="svgWrapper">
           <svg id="plane"></svg>
           <fieldset id="controls">
+            [Query Range]
             <label>x:<input type="text" id="x" value="150" /></label>
             <label>y:<input type="text" id="y" value="150" /></label>
             <label>width:<input type="text" id="width" value="400" /></label>
@@ -146,10 +139,32 @@
     <div id="treediv">
       <center>
         <div class="container">
-          <p class="is-size-4">Tree Canvas</p>
+          <p class="is-size-4">2D Range Tree</p>
         </div>
       </center>
-      <svg id="tree"></svg>
+      <div id="treeContainer">
+        <svg id="tree"></svg>
+        <div id="termExplainContainer">
+          <p class="is-size-4"><b>Terminologies</b></p>
+          <p class="is-size-7">
+            <b style="color: pink">pink nodes:</b>
+            visited
+            <br />
+            <b style="color: pink">S:</b>
+            Split nodes
+            <br />
+            <b style="color: orange">WR & orange nodes:</b>
+            Within Range, aka, points that satisfied the constraints
+            <br />
+            <b style="color: lightgreen">RS & lightgreen nodes:</b>
+            Report entire Subtree as found points
+            <br />
+            <b style="color: lightblue">lightblue nodes:</b>
+            Where we need to do a search in the assoc structure only, but not
+            its children
+          </p>
+        </div>
+      </div>
     </div>
     <!-- bootstrap js -->
     <script

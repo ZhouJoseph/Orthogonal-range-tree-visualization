@@ -177,7 +177,7 @@ async function drawEntireTree(node) {
   var p = node;
   var stack = [];
   var initX = $("#tree").width() / 2 - 20;
-  var initY = 350;
+  var initY = 300;
   var levelRange = 250;
   var nodeRange = 52;
   var maxlevel = 0;
