@@ -177,7 +177,7 @@ async function drawEntireTree(node) {
   var p = node;
   var stack = [];
   var initX = $("#tree").width() / 2 - 20;
-  var initY = 300;
+  var initY = 350;
   var levelRange = 250;
   var nodeRange = 52;
   var maxlevel = 0;
@@ -264,4 +264,16 @@ function refreshTree() {
   treeSVG.selectAll("text").data([]).exit().remove();
   treeSVG.selectAll("g").data(treeData).exit().remove();
   treeSVG.selectAll("line").data(treeBranch).exit().remove();
+}
+
+// to refresh the tree (exit and then remove)
+function clearTree() {
+  for (let j = 0; j < dps.length; j++) {
+    dps[j][2] = blackColor;
+  }
+  refreshSvg();
+  numMessage = 0;
+  treeSVG.selectAll(".explaintext").data([]).exit().remove();
+  treeSVG.selectAll("text").style("fill", whiteColor);
+  treeSVG.selectAll("circle").style("fill", whiteColor);
 }
