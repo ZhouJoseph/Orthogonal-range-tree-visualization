@@ -43,13 +43,12 @@ function addPointToPlane(x, y, push = true) {
   // we need to add it to dps
   if (push) {
     console.log("clicked:", x, y);
-    if (dps.length != 0) {
-      document.getElementById("buildTree").disabled = false;
-    }
     var leafkey = x + ";" + y;
     var id = leafIDCounter--;
     leafNodeID[leafkey] = id;
     dps.push([x, y, blackColor, id + "leaf"]);
+    document.getElementById("buildTree").disabled = false;
+    document.getElementById("findPoints").disabled = true;
   }
 
   var dots = planeSVG.selectAll("g").data(dps).enter().append("g");

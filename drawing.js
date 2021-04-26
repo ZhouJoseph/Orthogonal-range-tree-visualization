@@ -265,3 +265,15 @@ function refreshTree() {
   treeSVG.selectAll("g").data(treeData).exit().remove();
   treeSVG.selectAll("line").data(treeBranch).exit().remove();
 }
+
+// to refresh the tree (exit and then remove)
+function clearTree() {
+  for (let j = 0; j < dps.length; j++) {
+    dps[j][2] = blackColor;
+  }
+  refreshSvg();
+  numMessage = 0;
+  treeSVG.selectAll(".explaintext").data([]).exit().remove();
+  treeSVG.selectAll("text").style("fill", whiteColor);
+  treeSVG.selectAll("circle").style("fill", whiteColor);
+}

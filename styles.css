@@ -62,6 +62,22 @@ line {
 #tree {
   width: 100%;
   float: left;
-  height: 1100px;
+  height: 950px;
   background-color: #2f2f2f;
+}
+
+#treeContainer {
+  position: relative;
+}
+
+#termExplainContainer {
+  position: absolute;
+  right: 0%;
+  padding: 10px;
+  background-color: #2f2f2f00;
+}
+
+#termExplainContainer p {
+  color: #fdfdfd;
+  font-size: 3px;
 }

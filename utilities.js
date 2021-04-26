@@ -61,7 +61,7 @@ function drawVisiting(node, alignment, range) {
   text += isSplit ? "found! Should start visiting both left and right" : "";
   treeSVG
     .append("text")
-    .attr("class", node.id + "node " + node.id + "explain")
+    .attr("class", node.id + "node " + node.id + "explain explaintext")
     .attr("dx", startingMessageX)
     .attr("dy", startingMessageY + messageNumber * messageRange)
     .text(text)
@@ -78,6 +78,7 @@ function drawVisiting(node, alignment, range) {
 function drawS(node, alignment, range) {
   treeSVG
     .append("text")
+    .attr("class", "explaintext")
     .attr("dx", node.x - 5)
     .attr("dy", node.y - 10)
     .text("S")
@@ -112,6 +113,7 @@ function drawFindSplit(range, alignment) {
     "]";
   treeSVG
     .append("text")
+    .attr("class", "explaintext")
     .attr("dx", startingMessageX)
     .attr("dy", startingMessageY + messageNumber * messageRange)
     .text(text)
@@ -124,6 +126,7 @@ function drawNotFindSplit() {
     "Step " + messageNumber.toString() + ". Didn't find any split node...";
   treeSVG
     .append("text")
+    .attr("class", "explaintext")
     .attr("dx", startingMessageX)
     .attr("dy", startingMessageY + messageNumber * messageRange)
     .text(text)
@@ -241,6 +244,7 @@ async function withinRange(point, range, node, draw = true) {
     if (draw) {
       treeSVG
         .append("text")
+        .attr("class", "explaintext")
         .attr("dx", node.x - 10)
         .attr("dy", node.y + 10)
         .text("WR")
@@ -253,7 +257,7 @@ async function withinRange(point, range, node, draw = true) {
       text += "[YES~!]";
       treeSVG
         .append("text")
-        .attr("class", node.id + "node " + node.id + "explain")
+        .attr("class", node.id + "node " + node.id + "explain explaintext")
         .attr("dx", startingMessageX)
         .attr("dy", startingMessageY + messageNumber * messageRange)
         .text(text)
@@ -274,7 +278,7 @@ async function withinRange(point, range, node, draw = true) {
     text += "[NO!!]";
     treeSVG
       .append("text")
-      .attr("class", node.id + "node " + node.id + "explain")
+      .attr("class", node.id + "node " + node.id + "explain explaintext")
       .attr("dx", startingMessageX)
       .attr("dy", startingMessageY + messageNumber * messageRange)
       .text(text)
@@ -300,6 +304,7 @@ async function reportSubtreeNode(node, draw) {
   if (draw) {
     treeSVG
       .append("text")
+      .attr("class", "explaintext")
       .attr("dx", node.x - 10)
       .attr("dy", node.y + 10)
       .text("RS")
@@ -340,7 +345,7 @@ function drawReportSubtreeVisit(node) {
     ". All constraints satisfied";
   treeSVG
     .append("text")
-    .attr("class", node.id + "node " + node.id + "explain")
+    .attr("class", node.id + "node " + node.id + "explain explaintext")
     .attr("dx", startingMessageX)
     .attr("dy", startingMessageY + messageNumber * messageRange)
     .text(text)
@@ -365,7 +370,7 @@ function drawOneDRangeSearchVisit(node) {
     ". All its subtrees satisfy horizontal constraints";
   treeSVG
     .append("text")
-    .attr("class", node.id + "node " + node.id + "explain")
+    .attr("class", node.id + "node " + node.id + "explain explaintext")
     .attr("dx", startingMessageX)
     .attr("dy", startingMessageY + messageNumber * messageRange)
     .text(text)
@@ -483,7 +488,7 @@ function drawTwoDRangeVisit(node, range) {
     (node.isleaf ? node.val[0] + "," + node.val[1] : node.val);
   treeSVG
     .append("text")
-    .attr("class", node.id + "node " + node.id + "explain")
+    .attr("class", node.id + "node " + node.id + "explain explaintext")
     .attr("dx", startingMessageX)
     .attr("dy", startingMessageY + messageNumber * messageRange)
     .text(text)
@@ -631,6 +636,7 @@ async function findPoints() {
   document.getElementById("timerSwitch").disabled = true;
   // range
   refreshSvg();
+  clearTree();
   var range = userInputRange;
 
   // update user preferred timer
@@ -653,6 +659,7 @@ async function findPoints() {
   }
   refreshSvg();
   document.getElementById("buildTree").disabled = false;
+  document.getElementById("findPoints").disabled = false;
   document.getElementById("randomizedPoint").disabled = false;
   document.getElementById("randomizedQuery").disabled = false;
   document.getElementById("timerSwitch").disabled = false;

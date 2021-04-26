@@ -15,7 +15,7 @@ var timerWait = 1000;
 var numMessage = 0;
 var startingMessageX = 10;
 var startingMessageY = 20;
-var messageRange = 20;
+var messageRange = 18;
 
 var planeSVG = d3.select("#plane");
 var treeSVG = d3.select("#tree");
