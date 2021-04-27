@@ -80,14 +80,14 @@ A brute force approach would take O(n) time to report all the points within a gi
 In this project, we focus on orthogonal queries, but it can be optimized to suit other range query types.
 
 A normal range tree partitions the data by each of its dimensions, and each node would have an additional range tree partitioned by another dimension as its associate structure.
-- construction time: O(nlogn)
-- space complexity: O(nlogn)
-- query time complexity: O(log^d(n) + k) where d is the dimension of the data and k is the #point in range
+- construction time: O(nlog<sup>d-1</sup>n)
+- space complexity: O(nlog<sup>d-1</sup>n)
+- query time complexity: O(log<sup>d</sup>n + k) where d is the dimension of the data and k is the #point in range
 
 ![Orthogonal-range-tree-visualization][tree]
 
 There exists an optimized version: a range three that stores the last dimension in a fractional cascading fashion rather than a tree. Because we don't need to search the tree in the last dimension, thus the optimized range tree improves time complexity for the query of the normal range tree to 
-- O(log^(d-1)(n) + k)
+- O(log<sup>d-1</sup>n + k)
 
 ### Implementation Details and Difficulties
 
