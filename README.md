@@ -1,4 +1,4 @@
-# Project Summary
+# [Project Summary](https://zhoujoseph.github.io/Orthogonal-range-tree-visualization/)
 Orthogonal range tree is a two dimensional range tree that enables efficient lookup of all the points within the query constraints. 
 
 <!-- PROJECT SHIELDS -->
@@ -44,6 +44,7 @@ Orthogonal range tree is a two dimensional range tree that enables efficient loo
         <li><a href="#implementation-details-and-difficulties">Implementation Details and Difficulties</a></li>
         <li><a href="#built-with">Built With</a></li>
         <li><a href="#my-own-work">My Own Work</a></li>
+        <li><a href="#acknowledgements">Acknowledgements</a></li>
       </ul>
     </li>
     <li>
@@ -54,7 +55,6 @@ Orthogonal range tree is a two dimensional range tree that enables efficient loo
     </li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
@@ -80,14 +80,14 @@ A brute force approach would take O(n) time to report all the points within a gi
 In this project, we focus on orthogonal queries, but it can be optimized to suit other range query types.
 
 A normal range tree partitions the data by each of its dimensions, and each node would have an additional range tree partitioned by another dimension as its associate structure.
-- construction time: O(nlogn)
-- space complexity: O(nlogn)
-- query time complexity: O(log^d(n) + k) where d is the dimension of the data and k is the #point in range
+- construction time: O(nlog<sup>d-1</sup>n)
+- space complexity: O(nlog<sup>d-1</sup>n)
+- query time complexity: O(log<sup>d</sup>n + k) where d is the dimension of the data and k is the #point in range
 
 ![Orthogonal-range-tree-visualization][tree]
 
 There exists an optimized version: a range three that stores the last dimension in a fractional cascading fashion rather than a tree. Because we don't need to search the tree in the last dimension, thus the optimized range tree improves time complexity for the query of the normal range tree to 
-- O(log^(d-1)(n) + k)
+- O(log<sup>d-1</sup>n + k)
 
 ### Implementation Details and Difficulties
 
@@ -107,7 +107,7 @@ The two dimensional range search algorithm can be decomposed into several smalle
 ![Orthogonal-range-tree-visualization][search]
 
 #### Visualization's Side
-In order to have an interactive design, I would want a way to connect the points in the plane canvas and the nodes in the tree canvas. So I simply assigned an id for each of the node that gets created, and use that node id as part of the element's class name
+In order to have an interactive design, I would want a way to connect the points in the input canvas and the nodes in the tree canvas. So I simply assigned an id for each of the node that gets created, and use that node id as part of the element's class name
 
 Later on, I found out that I need to treat leaf nodes and normal nodes differently, because I want to highlight all the nodes that represents the same point in the input canvas in the range tree canvas and vice versa.
 
@@ -125,24 +125,32 @@ In this way, by having the text explaination tied to a node, the user can then s
 * [BootStrap](https://getbootstrap.com/)
 * [Bluma](https://bulma.io/)
 
+<!-- ACKNOWLEDGEMENTS -->
+## Acknowledgements
+* [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
+* [GitHub Pages](https://pages.github.com)
+
 
 ### My Own Work
-I use d3.js as a assitance to draw the points and lines and texts on svgs, and bootstrap and bulma for some element's css styling. Except as described above, all the work on this project is my own, that includes: the entire range tree algorithm (construction & searching & testing), the entire interactive user interface and the entire visualization algorithm.
+I use d3.js as a assitance to draw the points and lines and texts on svgs, and bootstrap and bulma for some element's css styling. I also use Best-Readme-Template as the starter template for this markdown, and GitHub Pages for hosting my visualization implementation. 
 
-![Signature-Kaixuan-Zhou][signed]
+Except as described above, all the work on this project is my own, that includes: the entire range tree algorithm (construction & searching & testing), the entire interactive user interface and the entire visualization algorithm.
+
+![Signature-Kaixuan-Zhou][signature]
 
 <!-- GETTING STARTED -->
 ## How To Run The Project
 
 ### Installation
 
-1. Understand range tree [wiki](https://en.wikipedia.org/wiki/Range_tree)
+1. Understand what is a range tree, here's the [wiki](https://en.wikipedia.org/wiki/Range_tree)
 2. Clone the repo
    ```sh
    git clone https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization.git
    ```
 3. That's it. Open index.html in your browser
-4. If you just want to view the project, please simply go [here](https://zhoujoseph.github.io/Orthogonal-range-tree-visualization/)
+
+If you just want to view the project, please simply go [here](https://zhoujoseph.github.io/Orthogonal-range-tree-visualization/)
 
 <!-- LICENSE -->
 ## License
@@ -153,13 +161,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Kaixuan Zhou - LinkedIn[@kaixuan-zhou-nyu](https://www.linkedin.com/in/kaixuan-zhou-nyu/) - kaixuan.zhou@nyu.edu
 
-Project Link: [https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization](https://zhoujoseph.github.io/Orthogonal-range-tree-visualization/)
+Project Link: [https://zhoujoseph.github.io/Orthogonal-range-tree-visualization/](https://zhoujoseph.github.io/Orthogonal-range-tree-visualization/)
 
-<!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
-* [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
@@ -181,4 +184,4 @@ Project Link: [https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization
 [buildtree]: images/buildtree.gif
 [search]: images/search.gif
 [interactive]: images/interactive.gif
-[signed]: images/signed.png
+[signature]: images/sign.png
