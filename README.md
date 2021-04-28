@@ -27,6 +27,8 @@ Orthogonal range tree is a two dimensional range tree that enables efficient loo
   <p align="center">
     <a href="https://zhoujoseph.github.io/Orthogonal-range-tree-visualization/">View Demo</a>
     ·
+    <a href="https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization/images/slides.pdf">View Presentation</a>
+    ·
     <a href="https://github.com/ZhouJoseph/Orthogonal-range-tree-visualization/issues">Report Bug</a>
   </p>
 </p>
